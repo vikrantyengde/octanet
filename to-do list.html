@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #todo-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #task-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        .task-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        #task-input {
+            width: 100%;
+            padding: 10px;
+        }
+
+        #add-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="todo-container">
+        <h1>To-Do List</h1>
+        <input type="text" id="task-input" placeholder="Add a new task">
+        <button id="add-button">Add Task</button>
+        <ul id="task-list"></ul>
+    </div>
+
+    <script>
+        const taskInput = document.getElementById('task-input');
+        const addButton = document.getElementById('add-button');
+        const taskList = document.getElementById('task-list');
+
+        addButton.addEventListener('click', function() {
+            const taskText = taskInput.value.trim();
+            if (taskText !== '') {
+                const listItem = document.createElement('li');
+                listItem.className = 'task-item';
+                listItem.innerHTML = `
+                    <input type="checkbox">
+                    <span>${taskText}</span>
+                    <button class="delete-button">Delete</button>
+                `;
+                taskList.appendChild(listItem);
+                taskInput.value = '';
+                bindDeleteButton(listItem);
+            }
+        });
+
+        function bindDeleteButton(listItem) {
+            const deleteButton = listItem.querySelector('.delete-button');
+            deleteButton.addEventListener('click', function() {
+                taskList.removeChild(listItem);
+            });
+        }
+    </script>
+</body>
+</html>
